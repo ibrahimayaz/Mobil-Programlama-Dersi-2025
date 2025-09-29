@@ -1,48 +1,60 @@
 # Dart Temelleri
 
-## 1. Dart Nedir?
-Dart, Google tarafından geliştirilen bir programlama dilidir ve genellikle mobil uygulama geliştirme için kullanılır. Flutter framework'u ile birlikte Dart, kullanıcı arayüzleri oluşturmak için mükemmel bir araçtır.
+Dart, Google tarafından geliştirilen bir programlama dilidir. Özellikle mobil uygulamalar geliştirmek için kullanılır. Dart dilinin öğrenilmesi, mobil programlama dünyasına adım atmak için harika bir başlangıçtır.
 
-## 2. Değişkenler (Variables)
-Değişkenler, programlarımızda veri saklamak için kullandığımız isimlendirilmiş alanlardır. Dart'ta değişkenler, `var`, `final` ve `const` anahtar kelimeleri ile tanımlanabilir.
+## Değişkenler (Variables)
 
-### 2.1 Var
-`var` anahtar kelimesi ile tanımlanan değişken, atandığı değere göre türü belirlenir.
+Değişkenler, programda veri saklamak için kullanılan isimlendirilmiş alanlardır. Dart'ta değişkenler `var`, `final` veya `const` anahtar kelimeleri ile tanımlanabilir.
+
+### `var` ile Değişken Tanımlama
+`var` anahtar kelimesi, değişkenin türünü otomatik olarak belirler. Örneğin:
 ```dart
-var isim = "Ahmet"; // String türünde
-var yas = 18; // int türünde
+var isim = 'Ahmet'; // String türünde bir değişken
+var yas = 16; // int türünde bir değişken
 ```
 
-### 2.2 Final
-`final` ile tanımlanan bir değişken, yalnızca bir kez atanabilir ve sonrasında değiştirilemez.
+### `final` ile Değişken Tanımlama
+`final` anahtar kelimesi ile tanımlanan değişkenler, bir kez atandıktan sonra değiştirilemez.
 ```dart
-final pi = 3.14; // pi değişkeni bir daha değiştirilemez
+final dogumYili = 2007; // Değiştirilemez
 ```
 
-### 2.3 Const
-`const` ile tanımlanan değişken, derleme zamanında sabit bir değer alır ve değiştirilemez.
+### `const` ile Değişken Tanımlama
+`const` anahtar kelimesi ile tanımlanan değişkenler, derleme zamanında sabit olan değerlerdir.
 ```dart
-const sabitSayi = 10; // sabitSayi değişkeni değiştirilemez
+const pi = 3.14; // Sabit bir değer
 ```
 
-## 3. Veri Türleri (Data Types)
-Dart, birçok yerleşik veri türüne sahiptir:
+## Veri Türleri (Data Types)
 
-- **int**: Tam sayılar için kullanılır. Örnek: `int sayi = 10;`
-- **double**: Ondalık sayılar için kullanılır. Örnek: `double pi = 3.14;`
-- **String**: Metin verileri için kullanılır. Örnek: `String ad = "Ali";`
-- **bool**: Boolean değerler (true/false) için kullanılır. Örnek: `bool dogruMu = true;`
+Dart, farklı veri türlerini destekler. En yaygın olanları şunlardır:
+- **String**: Metin verileri. Örnek: `var ad = 'Ali';`
+- **int**: Tam sayılar. Örnek: `var sayi = 10;`
+- **double**: Ondalık sayılar. Örnek: `var pi = 3.14;`
+- **bool**: Mantıksal değerler (true veya false). Örnek: `var dogruMu = true;`
 
-## 4. Örnek Kullanım
-Aşağıda, Dart'ta değişkenlerin nasıl kullanılacağını gösteren basit bir örnek bulunmaktadır:
+## Örnekler (Examples)
 
+### Değişken Kullanımı
 ```dart
 void main() {
-  var ad = "Merve";
-  var yas = 16;
-  print("Adım: " + ad);
-  print("Yaşım: " + yas.toString());
+  var isim = 'Elif';
+  var yas = 17;
+  print('Benim adım $isim ve yaşım $yas.');
 }
 ```
+Bu kod, "Benim adım Elif ve yaşım 17." mesajını konsola yazdırır.
 
-Bu kod, kullanıcıya adını ve yaşını yazdıracaktır.
+### Basit Hesaplama
+```dart
+void main() {
+  var a = 5;
+  var b = 10;
+  var toplam = a + b;
+  print('Toplam: $toplam');
+}
+```
+Bu kod, iki sayının toplamını hesaplar ve "Toplam: 15" mesajını gösterir.
+
+## Sonuç
+Dart dilinin temellerini öğrenmek, mobil uygulama geliştirme yolculuğunun ilk adımıdır. Değişkenler ve veri türleri ile başlayarak daha karmaşık konulara geçebilirsiniz.
