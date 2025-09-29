@@ -1,60 +1,160 @@
-# Dart Temelleri
+# 📚 Hafta 1: Dart'a Giriş (Tamamen Temel Seviyede)
 
-Dart, Google tarafından geliştirilen bir programlama dilidir. Özellikle mobil uygulamalar geliştirmek için kullanılır. Dart dilinin öğrenilmesi, mobil programlama dünyasına adım atmak için harika bir başlangıçtır.
+Bu hafta hiçbir şekilde ileri seviye konulara (sınıflar, listeler, kullanıcıdan veri alma, fonksiyon yazma vb.) girmiyoruz. Sadece: 
+- Program nedir?
+- Dart nasıl çalışır?
+- Değişken nedir?
+- Temel veri türleri nelerdir?
+- Ekrana nasıl yazı yazarız?
+- Basit 4 örnek uygulama (sade, anlaşılır)
 
-## Değişkenler (Variables)
+---
+## 🎯 Hedef
+Hafta sonunda: Değişken tanımlayıp, onlara değer atayıp, `print()` ile ekrana bilgi verebilmeyi öğreneceksiniz.
 
-Değişkenler, programda veri saklamak için kullanılan isimlendirilmiş alanlardır. Dart'ta değişkenler `var`, `final` veya `const` anahtar kelimeleri ile tanımlanabilir.
+---
+## 💡 Programlama Nedir?
+Bilgisayara adım adım yapması gereken işleri anlatmaktır. Dart dilini kullanarak bilgisayara "şunu yaz", "bunu hesapla" gibi komutlar veriyoruz.
 
-### `var` ile Değişken Tanımlama
-`var` anahtar kelimesi, değişkenin türünü otomatik olarak belirler. Örneğin:
+---
+## 🧠 Dart Nedir?
+Google tarafından geliştirilmiş bir programlama dilidir. Flutter ile birlikte mobil uygulama (Android / iOS) geliştirmekte kullanacağız. Bu hafta sadece temel sözdizimini (syntax) tanıyoruz.
+
+---
+## 💾 Değişken (Variable) Nedir?
+Bir bilgiyi saklamak için kullandığımız isimlendirilmiş kutudur.
+
+Örnek düşün: Masanda etiketlenmiş kutular var.
+- Kutunun adı: `ogrenciAdi`
+- İçindeki şey: "Ayşe"
+
+Dart'ta:
 ```dart
-var isim = 'Ahmet'; // String türünde bir değişken
-var yas = 16; // int türünde bir değişken
+var ogrenciAdi = "Ayşe";  // ogrenciAdi kutusuna "Ayşe" yazısını koyduk
 ```
 
-### `final` ile Değişken Tanımlama
-`final` anahtar kelimesi ile tanımlanan değişkenler, bir kez atandıktan sonra değiştirilemez.
+### Neden Değişken Kullanırız?
+- Aynı bilgiyi tekrar tekrar yazmak yerine bir isimle kullanırız.
+- Sonradan değiştirebiliriz (var kullandıysak).
+
+---
+## 🔤 Temel Veri Türleri
+| Tür | Amaç | Örnek |
+|-----|------|-------|
+| int | Tam sayılar | `int yas = 16;` |
+| double | Ondalıklı sayılar | `double sicaklik = 23.5;` |
+| String | Metin (yazı) | `String ad = "Ali";` |
+| bool | Doğru / Yanlış | `bool gectiMi = true;` |
+
+Bu hafta sadece bu 4 tür yeterli.
+
+---
+## 🆚 `var`, `final`, `const` Farkı
+| Anahtar Kelime | Değiştirilebilir mi? | Ne Zaman Kullanılır? |
+|----------------|----------------------|----------------------|
+| var | Evet | Normal değişken |
+| final | Hayır (bir kez atanır) | Sonradan değişmeyecek değer |
+| const | Hayır (derleme anında sabit) | Matematiksel sabit gibi |
+
+Bu hafta ağırlıkla `var` kullanacağız. `final` ve `const` sadece gösterildi.
+
+---
+## 🖨️ Ekrana Yazı Yazdırma
+Kullanılan komut: `print()`
 ```dart
-final dogumYili = 2007; // Değiştirilemez
+print("Merhaba Dünya");
+print(5 + 3);
+print("Toplam: " + (5 + 3).toString());
 ```
 
-### `const` ile Değişken Tanımlama
-`const` anahtar kelimesi ile tanımlanan değişkenler, derleme zamanında sabit olan değerlerdir.
-```dart
-const pi = 3.14; // Sabit bir değer
-```
+---
+## ⚠️ SIK HATA ÖRNEKLERİ
+| Hatalı | Doğru | Açıklama |
+|--------|-------|----------|
+| `var isim = Ali;` | `var isim = "Ali";` | Metinler tırnak içinde olmalı |
+| `print("Yaş: " + 15);` | `print("Yaş: " + 15.toString());` | Sayıyı String'e çevirmen gerek |
+| `var yas = 16` | `var yas = 16;` | Satır sonuna `;` koymayı unutma |
 
-## Veri Türleri (Data Types)
+---
+## ✅ 4 Adet Temel Örnek
+Aşağıdaki örneklerin her biri ayrı çalıştırılabilir küçük programlardır.
 
-Dart, farklı veri türlerini destekler. En yaygın olanları şunlardır:
-- **String**: Metin verileri. Örnek: `var ad = 'Ali';`
-- **int**: Tam sayılar. Örnek: `var sayi = 10;`
-- **double**: Ondalık sayılar. Örnek: `var pi = 3.14;`
-- **bool**: Mantıksal değerler (true veya false). Örnek: `var dogruMu = true;`
-
-## Örnekler (Examples)
-
-### Değişken Kullanımı
+### 1) Kişisel Tanıtım
 ```dart
 void main() {
-  var isim = 'Elif';
-  var yas = 17;
-  print('Benim adım $isim ve yaşım $yas.');
+  var ad = "Zeynep";
+  var yas = 16;
+  var sehir = "Ankara";
+  print("Benim adım " + ad);
+  print("Yaşım: " + yas.toString());
+  print("Yaşadığım şehir: " + sehir);
 }
 ```
-Bu kod, "Benim adım Elif ve yaşım 17." mesajını konsola yazdırır.
+Ne Öğretiyor? -> Değişken tanımlama + print kullanımı
 
-### Basit Hesaplama
+### 2) Basit Toplama - Çıkarma
 ```dart
 void main() {
-  var a = 5;
-  var b = 10;
-  var toplam = a + b;
-  print('Toplam: $toplam');
+  var sayi1 = 12;
+  var sayi2 = 8;
+  var toplam = sayi1 + sayi2;
+  var fark = sayi1 - sayi2;
+  print("Birinci sayı: " + sayi1.toString());
+  print("İkinci sayı: " + sayi2.toString());
+  print("Toplam: " + toplam.toString());
+  print("Fark: " + fark.toString());
 }
 ```
-Bu kod, iki sayının toplamını hesaplar ve "Toplam: 15" mesajını gösterir.
+Ne Öğretiyor? -> Aritmetik işlemler + değişkenler
 
-## Sonuç
-Dart dilinin temellerini öğrenmek, mobil uygulama geliştirme yolculuğunun ilk adımıdır. Değişkenler ve veri türleri ile başlayarak daha karmaşık konulara geçebilirsiniz.
+### 3) Not Ortalaması Hesaplama (Basit)
+```dart
+void main() {
+  var matematik = 80;
+  var turkce = 90;
+  var fizik = 70;
+  var ortalama = (matematik + turkce + fizik) / 3;  // double sonuç
+  print("Not Ortalaması: " + ortalama.toString());
+}
+```
+Ne Öğretiyor? -> Ondalıklı sonuç + bölme işlemi
+
+### 4) Sıcaklık Dönüşümü (Celsius -> Fahrenheit)
+Formül: F = C * 1.8 + 32
+```dart
+void main() {
+  var celsius = 25; // Derece cinsinden
+  var fahrenheit = celsius * 1.8 + 32;
+  print("Sıcaklık: " + celsius.toString() + "°C");
+  print("Fahrenheit Karşılığı: " + fahrenheit.toString());
+}
+```
+Ne Öğretiyor? -> Matematiksel ifade + formül uygulama
+
+---
+## 🔍 Alıştırmalar (Yapmanız ÖNERİLİR)
+1. Kendi adın, soyadın, okulun ve hedef mesleğin olan bir program yaz.
+2. 3 sınav notu girip ortalamasını bulan program yaz (örnekten esinlenebilirsin).
+3. 2 sayının çarpımı ve bölümünü hesaplayan program yaz.
+4. Bir öğrencinin ad, yaş, okul numarası ve geçme durumunu (true/false) yazdır.
+5. Dereceyi Fahrenheit'e çeviren programı bu kez farklı bir sayı ile tekrar yaz.
+
+---
+## 🧠 Bu Hafta Öğrendiğimiz Komut ve Terimler
+| Terim | Açıklama | Örnek |
+|-------|----------|-------|
+| `var` | Değişken tanımlar | `var yas = 15;` |
+| `int` | Tam sayı türü | `int sayac = 0;` |
+| `double` | Ondalıklı sayı | `double oran = 2.5;` |
+| `String` | Metin türü | `String ad = "Ali";` |
+| `bool` | Doğru/Yanlış | `bool aktif = true;` |
+| `print()` | Ekrana yazı yazar | `print("Merhaba");` |
+| `main()` | Program başlangıç noktası | `void main() { }` |
+| `;` | Satır sonu | `var x = 5;` |
+| `+ - * /` | Aritmetik işlemler | `a + b` |
+
+---
+## 🚀 Gelecek Hafta (Hafta 2)
+Operatörleri daha derin inceleyeceğiz (%, karşılaştırma ==, >, <) ve koşul yapısına (if / else) giriş yapacağız.
+
+Hazırsan bir sonraki haftaya geçebiliriz. Devam edelim mi? ✅
