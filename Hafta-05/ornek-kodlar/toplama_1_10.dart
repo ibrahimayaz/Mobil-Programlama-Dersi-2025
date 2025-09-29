@@ -1,0 +1,1 @@
+void main(){var t=0;for(var i=1;i<=10;i++){t+=i;}print('Toplam: $t');}

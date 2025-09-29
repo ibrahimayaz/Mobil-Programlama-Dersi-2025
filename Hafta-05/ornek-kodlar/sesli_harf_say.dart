@@ -1,0 +1,1 @@
+void main(){var metin='Merhaba Arkadaşlar';var sesli='aeıioöuüAEIİOÖUÜ';var sayac=0;for(var ch in metin.split('')){if(sesli.contains(ch))sayac++;}print('Sesli: $sayac');}

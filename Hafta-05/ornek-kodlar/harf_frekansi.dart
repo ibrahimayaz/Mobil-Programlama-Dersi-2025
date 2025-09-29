@@ -1,0 +1,1 @@
+void main(){var kelime='kavak';var k=0,a=0,v=0;for(var h in kelime.split('')){if(h=='k')k++;else if(h=='a')a++;else if(h=='v')v++;}print('k:$k a:$a v:$v');}
