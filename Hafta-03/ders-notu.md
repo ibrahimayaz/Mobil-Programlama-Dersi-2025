@@ -1,4 +1,4 @@
-# 📚 Hafta 3: Listeler (List), Döngüler ve Tekrar Yapıları
+# 📚 Hafta 3: Listeler (List), Map, Set ve Döngüler
 
 Bu hafta:
 - Liste (List) nedir, neden kullanırız?
@@ -140,6 +140,7 @@ void main() {
 | Boş listeyi yanlış okuma | Mantık hatası | `var l = []; l.add(10);` |
 | `print(l[l.length])` | Son eleman dışı | `l[l.length - 1]` |
 ---
+
 ## 🧪 Mini Alıştırmalar
 1. 5 şehirden oluşan liste: ilk ve son elemanı yaz.
 2. 1–10 arası sayı listesi oluştur, toplamını yaz.
@@ -151,6 +152,89 @@ void main() {
 8. Uzunluğu 5’ten büyük isimleri filtrele.
 9. Liste boşsa “Boş liste” değilse eleman sayısını yaz.
 10. Tek sayı adedini hesapla.
+
+---
+
+# 🟢 Set ve Map
+
+### 🎯 Hedefler
+- Set: benzersiz veri
+- Map: anahtar-değer saklama
+- Frekans (sıklık) sayımı
+
+### 🟢 Set Temel
+```dart
+var kume = <int>{1,2,2,3}; // {1,2,3}
+kume.add(4);
+kume.remove(2);
+print(kume.contains(3));
+print(kume); // {1,3,4}
+```
+
+### 🟡 Map Temel
+```dart
+var ogr = {'ad':'Ali','yas':16,'sehir':'Ankara'};
+print(ogr['ad']);
+ogr['yas'] = 17;
+ogr['okul'] = 'Lise';
+print(ogr);
+```
+
+### Map Üzerinde Dolaşma
+```dart
+var notlar = {'Ali':80,'Ayşe':90,'Mehmet':70};
+for (var k in notlar.keys) {
+  print('$k -> ${notlar[k]}');
+}
+```
+
+### ✅ Örnekler
+1) Benzersiz İsimler:
+```dart
+var isimler = <String>{'Ali','Ayşe','Ali','Mehmet'};
+print(isimler); // tekrarlar silinir
+```
+2) Set Eleman Kontrol:
+```dart
+var harfler = <String>{};
+harfler..add('a')..add('b');
+print(harfler.contains('a'));
+```
+3) Öğrenci Map:
+```dart
+var ogrenci = {'ad':'Zeynep','yas':17,'sinif':'11A'};
+print('Ad: ${ogrenci['ad']} Yaş: ${ogrenci['yas']}');
+```
+4) Harf Frekansı (optimize):
+```dart
+var metin = 'merhaba';
+var frekans = <String,int>{};
+for (var h in metin.split('')) {
+  frekans[h] = (frekans[h] ?? 0) + 1;
+}
+print(frekans);
+```
+5) Ders Not Ortalaması:
+```dart
+var dersNot = {'Mat':80,'Türkçe':90,'Fizik':70};
+var toplam = 0;
+for (var v in dersNot.values) toplam += v;
+print('Ortalama: ${toplam / dersNot.length}');
+```
+
+### ⚠️ Sık Hatalar
+| Hata | Açıklama | Çözüm |
+|------|----------|-------|
+| Set indekslenmeye çalışmak | Set sırasız | for-in ile dolaş |
+| Map olmayan key -> null | Hata sanılabilir | (map[key] ?? varsayılan) kullan |
+| Aynı key üstüne yazma bilinmiyor | Veri kaybı | Önce var mı kontrol et |
+
+### 🧪 Mini Alıştırmalar
+1. Cümledeki kelimeleri Set ile benzersizleştir
+2. İsim → yaş Map’inde 18+ olanları yazdır
+3. Sayı listesinde tekrar edenleri Set ile temizle
+4. Kelimedeki sesli harf sıklığı (Map)
+5. 80 üstü notları filtrele
 ---
 ## 🏁 Ödevler (Özet)
 1. Öğrenci not analizi: ortalama, max, min, 50 altı sayısı.
