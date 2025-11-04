@@ -53,7 +53,7 @@ void main() {
 void main() {
   var notlar = {"Ali": 80, "Ayşe": 90, "Mehmet": 70};
   for (var k in notlar.keys) {
-    print("$k -> \\${notlar[k]}");
+    print("$k -> ${notlar[k]}"); //Ali -> 80
   }
 }
 ```
@@ -88,8 +88,8 @@ void main() {
 ### 3) Öğrenci Map’i
 ```dart
 void main() {
-  var ogr = {"ad": "Zeynep", "yas": 17, "sinif": "11A"};
-  print("Ad: \\$\{ogr[\"ad\"]} | Yaş: \\$\{ogr[\"yas\"]}");
+    var ogr = {"ad": "Zeynep", "yas": 17, "sinif": "11A"};
+    print("Ad: ${ogr["ad"]} - Yaş: ${ogr["yas"]}");
 }
 ```
 ### 4) Ders Not Ortalaması
@@ -98,17 +98,27 @@ void main() {
   var dersNot = {"Mat": 80, "Türkçe": 90, "Fizik": 70};
   var toplam = 0;
   for (var v in dersNot.values) toplam += v;
-  print("Ortalama: \\$\{toplam / dersNot.length}");
+  print("Ortalama: ${toplam / dersNot.length}");
 }
 ```
 ### 5) 80 Üstü Notları Filtreleme
 ```dart
 void main() {
+  ornek4();
+}
+
+void ornek4() {
   var notlar = {"Ali": 50, "Ayşe": 85, "Deniz": 92, "Mert": 40};
   var yuksek = <String, int>{};
-  notlar.forEach((ad, not) { if (not >= 80) yuksek[ad] = not; });
+  for (var n in notlar.keys) {
+    int not = notlar[n]!;
+    if (not >= 80) {
+      yuksek[n] = not;
+    }
+  }
   print(yuksek); // {Ayşe: 85, Deniz: 92}
 }
+
 ```
 ---
 ## ⚠️ Sık Hatalar
