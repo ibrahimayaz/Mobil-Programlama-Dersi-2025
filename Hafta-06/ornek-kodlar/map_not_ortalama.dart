@@ -4,5 +4,5 @@ void main() {
   for (final v in notlar.values) {
     toplam += v;
   }
-  print("Ortalama: \\$\{toplam / notlar.length\}");
+  print("Ortalama: ${toplam / notlar.length}");
 }
