@@ -17,6 +17,12 @@ Flutter'da iki ana widget türü vardır: `StatelessWidget` ve `StatefulWidget`.
 ## Temel Kod Örneği
 
 ```dart
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const Sayac());
+}
+
 class Sayac extends StatefulWidget {
   const Sayac({super.key});
 
@@ -29,14 +35,18 @@ class _SayacState extends State<Sayac> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('Sayı: $_sayi'),
-        ElevatedButton(
-          onPressed: () => setState(() => _sayi++),
-          child: const Text('Arttır'),
+    return MaterialApp(
+      home: Scaffold(
+        body: Column(
+          children: [
+            Text('Sayı: $_sayi'),
+            ElevatedButton(
+              onPressed: () => setState(() => _sayi++),
+              child: const Text('Arttır'),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
