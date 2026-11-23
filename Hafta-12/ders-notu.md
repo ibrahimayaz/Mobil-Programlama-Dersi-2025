@@ -1,77 +1,26 @@
-# Hafta-12 - State Yönetimi: setState, Lift State Up, Provider Giriş
+# 📋 Hafta 12 — Hızlı Başvuru ve Prompt Kartı (AI Debugging, Test & Git Merge)
 
-Konu: `setState` kullanımı, state'i yukarı taşımak (lifting state up), basit `InheritedWidget`/`Provider` kullanımı.
+> Bu dosya, [Hafta 12 Ana Ders Dokümanı](README.md) için hızlı kopyala-yapıştır özetidir.
 
-Hedef: Uygulama genelinde basit state paylaşımı için Provider kullanımına giriş.
+## 1. 3'lü Hata Paketi Prompt Şablonu
+```text
+1. NE YAPIYORDUM?: [Yaptığın son işlem]
+2. HATA MESAJI: [VS Code Debug Console / Problems hatasını yapıştır]
+3. EKRAN GÖRÜNTÜSÜ: [Ekte]
 
-## Örnek 1 — setState tekrar (kısa)
-
-```dart
-// StatefulWidget içinde
-int _counter = 0;
-ElevatedButton(onPressed: () => setState(() => _counter++), child: Text('+'))
+Önce bu hatanın nedenini 2 sade Türkçe cümleyle açıkla, sonra sadece ilgili dosyayı düzelt.
 ```
 
-## Örnek 2 — Lift State Up
-
-```dart
-// Parent widget içinde state tutup child'e callback verirsiniz
-class Parent extends StatefulWidget { /* ... */ }
-
-// ParentState içinde
-void _guncelle(int val) => setState(() => _value = val);
-
-// Child çağrısı: widget.onChanged(newVal);
+## 2. Otomatik Test Komutu (VS Code Terminal)
+```bash
+flutter test
 ```
 
-## Örnek 3 — Basit Provider kullanımı
-
-```dart
-// pubspec.yaml: provider: ^6.0.0
-
-class CounterModel extends ChangeNotifier {
-  int _count = 0;
-  int get count => _count;
-  void increment() { _count++; notifyListeners(); }
-}
-
-// main.dart
-void main() => runApp(
-  ChangeNotifierProvider(
-    create: (_) => CounterModel(),
-    child: const MyApp(),
-  ),
-);
-
-// Kullanım
-Consumer<CounterModel>(builder: (context, model, child) => Text('\\${model.count}'))
+## 3. Bu Haftanın Mikro-Git Komutları (`merge` & `push`)
+```bash
+git add .
+git commit -m "Hafta 12: AI kalite denetimi ve testler eklendi"
+git switch main
+git merge ozellik/api-hafiza
+git push
 ```
-
-## Örnek 4 — Provider ile buton kontrolü
-
-```dart
-ElevatedButton(
-  onPressed: () => context.read<CounterModel>().increment(),
-  child: Text('Arttır'),
-)
-```
-
-## Örnek 5 — Basit InheritedWidget (konsept)
-
-```dart
-class MyInherited extends InheritedWidget {
-  final int data;
-  const MyInherited({required this.data, required super.child});
-
-  static MyInherited of(BuildContext context) => context.dependOnInheritedWidgetOfExactType<MyInherited>()!;
-
-  @override
-  bool updateShouldNotify(covariant MyInherited oldWidget) => oldWidget.data != data;
-}
-```
-
----
-
-Notlar:
-- `Provider` küçük ve orta ölçekli uygulamalar için hızlı çözümdür.
-- Daha ileri düzeyde Riverpod, Bloc, MobX gibi çözümler incelenebilir.

@@ -1,73 +1,29 @@
-# Hafta-14 - Animasyonlar ve Orta Seviye Widget'lar
+# 📋 Hafta 14 — Hızlı Başvuru ve Final Kontrol Kartı (APK & GitHub Release)
 
-Konu: Basit animasyonlar (`AnimatedContainer`, `AnimatedOpacity`), `Hero` animasyonu, `CustomPainter`, performans ipuçları.
+> Bu dosya, [Hafta 14 Ana Ders Dokümanı](README.md) için hızlı kopyala-yapıştır özetidir.
 
-Hedef: Temel animasyonları uygulamak ve arayüzü zenginleştirmek.
-
-## Örnek 1 — `AnimatedContainer`
-
-```dart
-class AnimExample extends StatefulWidget { /* ... */ }
-
-class _AnimExampleState extends State<AnimExample> {
-  bool _flag = false;
-  @override
-  Widget build(BuildContext context) => GestureDetector(
-    onTap: () => setState(() => _flag = !_flag),
-    child: AnimatedContainer(
-      duration: Duration(milliseconds: 500),
-      width: _flag ? 200 : 100,
-      height: _flag ? 200 : 100,
-      color: _flag ? Colors.red : Colors.blue,
-    ),
-  );
-}
+## 1. Test & Android APK Derleme (VS Code Terminal)
+```bash
+flutter clean
+flutter pub get
+flutter test
+flutter build apk --release
+# Çıktı: build/app/outputs/flutter-apk/app-release.apk
 ```
 
-## Örnek 2 — `Hero` animasyonu
-
-```dart
-// Başlangıç ekranında
-Hero(tag: 'pic', child: Image.network('...'))
-
-// Hedef ekranda
-Hero(tag: 'pic', child: Image.network('...'))
+## 2. Resmi Sürüm Etiketi (`v1.0.0`) ve GitHub Release
+```bash
+git add .
+git commit -m "Hafta 14: Portfolyo README ve final sürüm tamamlandı"
+git push
+git tag v1.0.0
+git push --tags
 ```
+Ardından GitHub → **Releases** → **Draft a new release** → `v1.0.0` seç → `app-release.apk` dosyasını yükle → **Publish release**!
 
-## Örnek 3 — `AnimatedOpacity`
-
-```dart
-AnimatedOpacity(
-  opacity: _visible ? 1.0 : 0.0,
-  duration: Duration(milliseconds: 300),
-  child: Text('Görünürlük örneği'),
-)
-```
-
-## Örnek 4 — `CustomPainter` (basit çizim)
-
-```dart
-class MyPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = Colors.green;
-    canvas.drawCircle(Offset(size.width/2, size.height/2), 40, paint);
-  }
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
-// Kullanım: CustomPaint(painter: MyPainter())
-```
-
-## Örnek 5 — Performans ipuçları
-
-- Büyük listelerde `ListView.builder` kullanın.
-- Gereksiz yeniden çizimleri önlemek için widget'ları parçalayın.
-- `const` kullanımı performansı artırır.
-
----
-
-Notlar:
-- Animasyonlar UI'yı zenginleştirir; ama aşırı animasyon kullanıcı deneyimini düşürebilir.
-- Daha ileri animasyonlar için `AnimationController` ve `Tween` konusuna bakın.
+## 3. 5 Dakikalık Final Sunumu Akışı
+1. **Problem & Fikir** (45 sn)
+2. **Google Stitch + `GEMINI.md` & `.gemini/skills/` Süreci** (1 dk)
+3. **Gerçek Telefonda Canlı Demo** (2 dk)
+4. **AI Debugging & `flutter test` Deneyimi** (45 sn)
+5. **GitHub Vitrini & `v1.0.0` APK Release** (30 sn)

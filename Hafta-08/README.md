@@ -1,270 +1,248 @@
-# Sınıf (Class) Yapısına Giriş
+# 🤖 Hafta 08: Yapay Zekâ Ajanı (Agent Mode) ile 3 Ekranlı Uygulama
 
-Bu not, sınıf (class) kavramını en temelden açıklamak için hazırlanmıştır. Örnekler Dart dilinde verilmiştir; amaç sınıf yapısını, alanları (fields), yapıcıları (constructors), metotları (methods) ve basit miras (inheritance) kullanımlarını adım adım göstermek.
+> Geçen hafta tek ekranlı bir uygulama yaptık. Gerçek uygulamalarda ise birden fazla ekran ve bu ekranlar arasında geçiş yapan bir **alt menü** bulunur. Bu hafta önce **klasör, dosya, ekran geçişi ve yapay zekâ ajanı** kavramlarını öğrenecek, sonra Google Stitch ile 2 yeni ekran tasarlayıp VS Code Gemini'nin **Agent Mode** özelliğiyle uygulamamızı 3 ekranlı hâle getireceğiz.
 
-## Neden sınıf kullanırız?
-
-- Gerçek dünya nesnelerini (insan, araba, öğrenci vb.) program içinde modellemek için.
-
-- İlgili veri ve davranışları aynı yapıda (mantıksal birimde) toplamak için.
-
-
-## Temel kavramlar
-
-- Alan (field): Sınıfın tuttuğu veri, sınıf değişkeni.
-
-- Yapıcı (constructor): Sınıf örneği (instance) oluştururken çağrılan özel metot.
-
-- Metot (method): Sınıfa ait davranışlar (fonksiyonlar).
-
-- Örnek (instance): Sınıftan oluşturulmuş nesne.
-
-### Yapıcı Metod Nedir?
-
-Yapıcı metod (constructor), bir sınıftan yeni bir nesne oluşturulurken otomatik olarak çalışan özel bir fonksiyondur. Yapıcı metodun temel amacı, nesne ilk oluşturulduğunda gerekli alanları başlatmak (initialize etmek) ve ilk ayarları yapmaktır. Dart'ta yapıcı metod, sınıf adıyla aynı isme sahip olur ve parametre alabilir.
-
-Örnek:
-
-```dart
-class Insan {
-  String isim;
-  int yas;
-
-  // Yapıcı metod
-  Insan(this.isim, this.yas);
-}
-
-var ali = Insan('Ali', 25); // ali nesnesi oluşturulurken yapıcı metod çalışır
-```
-
-Yapıcı metod sayesinde, nesne oluşturulurken gerekli veriler doğrudan atanabilir ve nesne kullanıma hazır hale gelir.
+![Klasik Sohbet Botu vs AI Agent Farkı](gorseller/chatbot_vs_agent.gif)
 
 ---
 
-## Basit bir sınıf örneği
+## 🗺️ Bu Hafta Ne Yapacağız?
 
-```dart
-class Insan {
-  String isim; // field
-  int yas;     // field
+| Bölüm | Ne Yapacağız? | Süre |
+|---|---|---|
+| **Bölüm 1** | Kavramlar: klasör/dosya, `lib/screens`, ekran geçişi, alt menü, sohbet botu vs ajan, plan | 30 dk |
+| **Bölüm 2** | Adım adım: Stitch'te 2 ekran → Agent Mode'u aç → Plan iste → Onayla → Çalıştır | 70 dk |
+| **Bölüm 3** | İlk kayıt noktamız: `git add` ve `git commit` | 10 dk |
 
-  // Yapıcı (constructor)
-  Insan(this.isim, this.yas);
-
-  // Metot
-  void selamla() {
-    print('Merhaba, benim adım $isim ve $yas yaşındayım.');
-  }
-}
-
-void main() {
-  var ali = Insan('Ali', 25); // örnek (instance)
-  ali.selamla();
-}
-```
-
-
-Ne oluyor?
-
-- `Insan` sınıfı iki alan tutuyor: `isim` ve `yas`.
-
-- `Insan(this.isim, this.yas);` kısa biçimli yapıcıdır; parametreleri doğrudan alanlara atar.
-
-- `selamla()` metodu örneğin davranışını gösterir.
-
-### Nesne örneği nedir?
-
-Bir sınıftan oluşturulan her bir varlığa "nesne örneği" (instance) denir. Örneğin, `var ali = Insan('Ali', 25);` satırı ile `Insan` sınıfından bir nesne (örnek) oluşturmuş oluruz. Bu nesne, sınıfın tanımladığı tüm özelliklere ve metotlara sahiptir.
-
-### Dart'ta neden `new` kullanmıyoruz?
-
-Eskiden Dart'ta nesne oluştururken `new` anahtar kelimesi kullanılırdı: `var ali = new Insan('Ali', 25);`. Ancak Dart 2 ile birlikte, daha sade ve modern bir yazım için `new` opsiyonel hale getirildi. Artık doğrudan `Insan('Ali', 25)` şeklinde nesne oluşturmak yeterlidir. Bu, kodun daha okunabilir ve kısa olmasını sağlar. Yani Dart'ta `new` yazmasak da derleyici otomatik olarak nesne oluşturur.
+> 🎯 **Hafta sonunda elinde olacaklar:** Alttaki menüyle birbirine geçiş yapan **3 ekranlı** çalışan bir uygulama ve projenin **ilk Git kaydı**.
 
 ---
 
-## Alanlara varsayılan değer verme ve isteğe bağlı parametreler
+## 📖 BÖLÜM 1 — Önce Kavramları Öğrenelim
 
-```dart
-class Nokta {
-  double x;
-  double y;
+### 1.1 Klasör, Dosya ve Dosya Uzantısı
+- **Basit Tanım:** **Dosya**, içinde bilgi saklanan tek bir belgedir. **Klasör**, dosyaları gruplayan kutudur. **Uzantı**, dosya adının sonundaki noktadan sonraki kısımdır ve dosyanın türünü söyler.
+- **Benzetme:** Klasör bir **çekmece**, dosya çekmecedeki **defter**dir.
+- **Bizim Projede:**
 
-  // İsteğe bağlı (opsiyonel) ve varsayılan değerli parametreli yapıcı
-  Nokta({this.x = 0.0, this.y = 0.0});
+| Uzantı | Anlamı |
+|---|---|
+| `.dart` | Flutter kod dosyası |
+| `.png` | Resim dosyası (Stitch tasarımlarımız) |
+| `.md` | Not/doküman dosyası (Markdown) |
 
-  void yazdir() {
-    print('Nokta(x: $x, y: $y)');
-  }
-}
-
-void main() {
-  var origin = Nokta();//Dikkat !!!
-  origin.yazdir(); // Nokta(x: 0.0, y: 0.0)
-
-  var p = Nokta(x: 3.5, y: 2.0);
-  p.yazdir();
-}
+### 1.2 Proje Klasör Yapısı: `lib` ve `lib/screens`
+- **Basit Tanım:** Flutter projelerinde tüm kod dosyaları **`lib`** klasöründe durur. Ekranları düzenli tutmak için `lib` içinde **`screens`** (ekranlar) adında bir alt klasör açarız.
+- **Benzetme:** Tüm kıyafetleri tek çekmeceye tıkıştırmak yerine "tişörtler", "pantolonlar" diye ayırmak gibi.
+- **Bizim Projede (bu haftanın sonunda):**
+```text
+lib/
+├── main.dart              ← Uygulamanın giriş kapısı + alt menü
+└── screens/
+    ├── ana_sayfa.dart     ← 1. ekran
+    ├── dersler_sayfasi.dart ← 2. ekran
+    └── profil_sayfasi.dart  ← 3. ekran
 ```
 
-Bu örnekte yapıcıda adlandırılmış ve varsayılan değerli parametreler kullanıldı.
+> 💡 **Neden tek dosya yetmez?** Her şey tek dosyada olursa dosya yüzlerce satıra çıkar; hata bulmak ve değişiklik yapmak zorlaşır. Ayrı dosyalar = düzenli proje.
+
+### 1.3 `main.dart` Ne İş Yapar?
+- **Basit Tanım:** Uygulama açıldığında **ilk çalışan** dosyadır.
+- **Benzetme:** Bir binanın **giriş kapısı ve danışma masası**. Gelen kişiyi doğru odaya (ekrana) yönlendirir.
+- **Bizim Projede:** `main.dart` sadece uygulamanın rengini/temasını ve alt menüyü yönetecek; ekranların içeriği `screens` klasöründe olacak.
+
+### 1.4 Ekran Geçişi (Navigasyon) ve Alt Menü
+- **Basit Tanım:** **Navigasyon**, bir ekrandan diğerine geçmektir. **Alt Menü (Bottom Navigation Bar)**, ekranın en altındaki sekmelerdir; dokununca ilgili ekran açılır.
+- **Benzetme:** Bir AVM'deki **kat yönlendirme panosu** gibi; hangi kata (ekrana) gitmek istiyorsan ona basarsın.
+- **Bizim Projede:** 3 sekme: **Ana Sayfa • Derslerim • Profil**.
+
+![KampüsCep 3 Ekranlı Etkileşimli Gezinme](gorseller/cok_ekranli_gecis.gif)
+
+### 1.5 Sohbet Botu ve Yapay Zekâ Ajanı (Agent) Arasındaki Fark
+- **Sohbet Botu:** Sadece **cevap yazar**. Kodu sen kopyalayıp doğru dosyaya yapıştırırsın.
+- **Ajan (Agent):** Proje klasörünü **görür**, **yeni dosya ve klasör oluşturur**, birden fazla dosyayı aynı anda **düzenler** ve gerekirse komut çalıştırır.
+- **Benzetme:** Sohbet botu, telefonda tarif veren bir **danışman**dır. Ajan ise evine gelip işi bizzat yapan bir **usta**dır — ama her işe başlamadan önce senden **izin** ister.
+
+| Özellik | Sohbet Botu | Agent Mode |
+|---|---|---|
+| Proje dosyalarını görür mü? | ❌ | ✅ |
+| Yeni dosya oluşturur mu? | ❌ (sen yaparsın) | ✅ (onayınla) |
+| Birden çok dosyayı birlikte düzenler mi? | ❌ | ✅ |
+| Kontrol kimde? | Sende | Yine sende — her değişikliği onaylarsın |
+
+### 1.6 Plan → Onay → Uygulama Yöntemi
+- **Basit Tanım:** Ajana doğrudan "yap" demek yerine önce **ne yapacağını listelemesini** isteriz, listeyi kontrol eder, sonra onay veririz.
+- **Benzetme:** Usta evi boyamaya başlamadan önce "Hangi odayı hangi renge boyayacağım?" listesini sana gösterir; sen onaylarsın.
+- **Neden önemli?** Ajan bazen istemediğin dosyaları da değiştirebilir. Plan sayesinde sürprizleri önceden yakalarsın.
+
+### 1.7 Tasarım Tutarlılığı
+- **Basit Tanım:** Uygulamadaki tüm ekranların aynı renkleri, yazı boyutlarını ve kart şekillerini kullanmasıdır.
+- **Benzetme:** Bir okulun tüm öğrencilerinin aynı formayı giymesi gibi — bakınca aynı okuldan olduklarını anlarsın.
+- **Bizim Projede:** Yeni ekranları **Hafta 07'deki aynı Stitch projesinde** tasarlayacağız; böylece renkler otomatik aynı kalır.
+
+### 1.8 Git: Kayıt Almak (`add` ve `commit`)
+- **Basit Tanım:** Git'te kayıt almak 2 adımdır: **`git add`** ile kaydedilecek dosyaları seçeriz, **`git commit`** ile kaydı açıklamasıyla birlikte mühürleriz.
+- **Benzetme:** Kargo göndermek gibi: Önce eşyaları **kutuya koyarsın** (`add`), sonra kutuyu **kapatıp üzerine etiket yazarsın** (`commit`).
+
+### 📌 Kavram Özet Tablosu
+
+| Kavram | Tek Cümlelik Hatırlatma |
+|---|---|
+| `lib/screens` | Ekran dosyalarının tutulduğu düzenli klasör |
+| `main.dart` | Uygulamanın giriş kapısı ve alt menü yöneticisi |
+| Navigasyon | Ekranlar arası geçiş |
+| Alt Menü | En alttaki sekmeler |
+| Agent Mode | Dosya oluşturup düzenleyebilen yapay zekâ ustası |
+| Plan → Onay → Uygula | Ajana önce plan yaptırıp sonra onay vermek |
+| `git add` / `git commit` | Kutuya koy / kutuyu etiketleyip mühürle |
 
 ---
 
-## Özel (private) alanlar ve getter/setter
+## 🛠️ BÖLÜM 2 — Adım Adım: 3 Ekranlı Uygulamayı AI ile Üretelim
 
-Dart'ta `_` ile başlayan isimler dosya-sınırında(dart kitaplığında) gizli (private) kabul edilir.
+### ▶️ Adım 1: Google Stitch'te 2. ve 3. Ekranı Tasarla
+**Ne yapıyoruz?** Mimarımızdan yeni iki odanın çizimini istiyoruz.
 
-```dart
-class BankaHesabi {
-  double _bakiye = 0.0; // gizli alan
+1. [stitch.withgoogle.com](https://stitch.withgoogle.com) adresinde **Hafta 07'deki aynı projeni** aç (yeni proje açma — renkler değişebilir).
+2. **2. Ekran** için yaz (kendi projene göre uyarla):
+```text
+Add a second screen to the same app with the exact same style and colors.
+Screen name: "Derslerim" (Turkish UI).
+Elements: Day filter chips at the top ("Pzt", "Sal", "Çar", "Per", "Cum"), a vertical list of colorful course cards (course name, time, classroom), same bottom navigation with "Derslerim" selected.
+```
+3. **3. Ekran** için yaz:
+```text
+Add a third screen to the same app with the exact same style and colors.
+Screen name: "Profil" (Turkish UI).
+Elements: Round student avatar, name "Zeynep Yılmaz", department "Bilgisayar Programcılığı", settings rows ("Bildirimler", "Tema", "Hakkında"), same bottom navigation with "Profil" selected.
+```
+4. Her iki ekranı da PNG olarak indir ve `tasarimlar/` klasörüne kaydet:
+   - `tasarimlar/ekran2_stitch.png`
+   - `tasarimlar/profil_stitch.png`
 
-  // Para yatırma
-  void yatir(double miktar) {
-    if (miktar > 0) _bakiye += miktar;
-  }
+✔️ **Kontrol:** `tasarimlar/` klasöründe 3 görsel var mı (`ana_ekran`, `ekran2`, `profil`)? Üçü de aynı renkleri kullanıyor mu?
 
-  // Para çekme
-  bool cek(double miktar) {
-    if (miktar <= _bakiye) {
-      _bakiye -= miktar;
-      return true;
-    }
-    return false;
-  }
+### ▶️ Adım 2: VS Code'da Agent Mode'u Aç
+**Ne yapıyoruz?** Gemini'yi "danışman" modundan "usta" moduna geçiriyoruz.
 
-  // Getter
-  double get bakiye => _bakiye;
-}
+1. VS Code'da sol menüden **✦ Gemini** panelini aç.
+2. Sohbet kutusunun yakınındaki **Agent** düğmesini/anahtarını aktif et.
+3. Bundan sonra Gemini bir dosyayı değiştirmek veya oluşturmak istediğinde sana **Accept / Approve (Onayla)** ve **Reject (Reddet)** seçenekleri gösterecek.
 
-void main() {
-  var h = BankaHesabi();
-  h.yatir(100);
-  if (h.cek(30)) print('Çekildi. Kalan: ${h.bakiye}');
-}
+✔️ **Kontrol:** Agent modu açık görünüyor mu?
+
+### ▶️ Adım 3: Ajandan Önce PLAN İste
+**Ne yapıyoruz?** Ajan işe başlamadan ne yapacağını görmek istiyoruz.
+
+Sohbet kutusunda `@tasarimlar/ekran2_stitch.png` ve `@tasarimlar/profil_stitch.png` dosyalarını ekle ve gönder:
+
+```text
+Projemizi tek ekrandan 3 ekranlı bir uygulamaya dönüştürmek istiyorum.
+
+ŞİMDİLİK KOD YAZMA, SADECE PLAN YAP:
+1. lib/screens/ klasörü altında 3 ekran dosyası olsun:
+   - ana_sayfa.dart (şu anki ana ekranımız)
+   - dersler_sayfasi.dart (@tasarimlar/ekran2_stitch.png tasarımına uygun)
+   - profil_sayfasi.dart (@tasarimlar/profil_stitch.png tasarımına uygun)
+2. lib/main.dart sadece temayı ve alttaki 3 sekmeli menüyü yönetsin.
+3. Seçili sekme ana rengimizle vurgulansın.
+4. Tüm yazılar Türkçe kalsın.
+
+Bana oluşturacağın dosya listesini ve yapacağın adımları kısa ve sade Türkçe maddelerle göster.
 ```
 
-Getter sayesinde `_bakiye` doğrudan dışarıdan değiştirilemez, ancak okunabilir.
+✔️ **Kontrol:** Ajan sana dosya listesini ve adımları gösterdi mi? Listede 3 ekran dosyası ve `main.dart` var mı?
+
+### ▶️ Adım 4: Planı Kontrol Et ve Onayla
+**Ne yapıyoruz?** Planı gözden geçirip "tamam, başla" diyoruz.
+
+1. Planda istemediğin bir şey varsa düzelt. Örnek: *"Profil ekranında şifre değiştirme olmasın."*
+2. Plan uygunsa gönder:
+```text
+Plan uygun, onaylıyorum. Şimdi dosyaları oluştur. İşin bitince ne yaptığını 3 maddeyle açıkla.
+```
+3. Ajan her dosya için onay isteyecek. Önerilen değişikliğe bakıp **Accept / Approve** düğmesine bas.
+
+✔️ **Kontrol:** Explorer'da `lib/screens/` klasörü ve içinde 3 `.dart` dosyası oluştu mu?
+
+### ▶️ Adım 5: Çalıştır ve Test Et
+**Ne yapıyoruz?** Ekranlar arası geçişin çalıştığını doğruluyoruz.
+
+1. Sağ alttan **Chrome** veya emülatör seç, **`F5`** tuşuna bas.
+2. Alt menüdeki 3 sekmeye sırayla dokun.
+
+✔️ **Kontrol:**
+- [ ] Her sekme farklı bir ekran açıyor.
+- [ ] Seçili sekme renkli görünüyor.
+- [ ] 3 ekran da Stitch tasarımlarına benziyor ve yazılar Türkçe.
+
+### ▶️ Adım 6: Fark Varsa Konuşarak Düzelt
+Örnek düzeltme prompt'ları:
+```text
+Derslerim ekranındaki gün çipleri tasarımda üstte yan yana duruyor, uygulamada alt alta çıkmış. Tasarımdaki gibi düzelt.
+```
+```text
+Alt menüde sekmeye tıklayınca ekran değişmiyor. Sorunu bul, düzelt ve nedenini 2 cümleyle açıkla.
+```
 
 ---
 
+## 🌱 BÖLÜM 3 — Mikro-Git: İlk Kayıt Noktamız
 
-## İsimlendirilmiş (Named) Yapıcı Metodlar
+**Hatırlatma (Kavram 1.8):** `git add` = kutuya koy, `git commit` = etiketle ve mühürle.
 
-### Neden ihtiyaç var?
+![Git Add ve Git Commit Animasyonu](gorseller/git_save_noktasi.gif)
 
-Bir sınıfta birden fazla farklı şekilde nesne oluşturmak isteyebiliriz. Örneğin, bazı durumlarda tüm alanları dışarıdan almak, bazı durumlarda ise varsayılan veya özel bir başlangıç değeriyle nesne oluşturmak gerekebilir. İşte bu gibi durumlarda "isimli yapıcı metod" (named constructor) kullanılır.
-
-İsimli yapıcılar, sınıfın farklı başlatma senaryoları için ayrı ayrı tanımlanabilir. Böylece kod daha okunabilir ve esnek olur.
-
-### Örnek:
-
-```dart
-class Kare {
-  double kenar;
-
-  Kare(this.kenar); // Ana yapıcı
-
-  // İsimli yapıcı: kareyi sıfırdan başlatır
-  Kare.bos() : kenar = 0.0;
-
-  // İsimli yapıcı: kareyi bir kenar uzunluğuna göre başlatır
-  Kare.birBirim() : kenar = 1.0;
-
-  double alan() => kenar * kenar;
-}
-
-void main() {
-  var k1 = Kare(4);
-  print(k1.alan()); // 16
-
-  var k2 = Kare.bos();
-  print(k2.alan()); // 0
-
-  var k3 = Kare.birBirim();
-  print(k3.alan()); // 1
-}
+**İlk kez yapıyorsan** Git'e kim olduğunu söyle (sadece 1 kez, kendi bilgilerinle):
+```bash
+git config --global user.name "Adın Soyadın"
+git config --global user.email "eposta@ornek.com"
 ```
 
-### Kısaca:
-- İsimli yapıcılar, bir sınıftan farklı şekillerde nesne oluşturmak için kullanılır.
-- Kodun okunabilirliğini ve esnekliğini artırır.
-- Özellikle varsayılan, boş veya özel başlatma senaryoları için idealdir.
+Sonra kayıt al:
+```bash
+git add .
+git commit -m "Hafta 8: 3 ekranli yapi ve alt menu eklendi"
+```
+
+| Parça | Anlamı |
+|---|---|
+| `git add .` | Değişen **tüm** dosyaları kutuya koy (`.` = "hepsi") |
+| `git commit -m "..."` | Kutuyu mühürle; `-m` sonrasındaki tırnak içi yazı kaydın **açıklamasıdır** |
+
+✔️ **Kontrol:** Şimdi `git status` yaz. *"nothing to commit, working tree clean"* (kaydedilecek bir şey yok, her şey temiz) yazısını görüyorsan kayıt başarılı!
+
+> 💡 **İyi açıklama nasıl yazılır?** "değişiklik" gibi belirsiz değil, **ne yaptığını** anlatan kısa cümle yaz: *"Hafta 8: Profil ekranı eklendi"*.
 
 ---
 
+## ⚠️ Sık Karşılaşılan Sorunlar
 
-## Miras (Inheritance) — Teorik ve Kodlu Açıklama
-
-### Teorik Bilgi
-
-**Kalıtım (Inheritance)**, bir sınıfın başka bir sınıftan özellikleri ve metotları devralmasını sağlar. Böylece kod tekrarını azaltır, ortak davranışları üst sınıfta tanımlayarak alt sınıflarda kullanabiliriz. Dart'ta kalıtım için `extends` anahtar kelimesi kullanılır.
-
-Örneğin, `Hayvan` adlı bir üst sınıfımız ve ondan türeyen `Kedi` adlı bir alt sınıfımız olabilir. Alt sınıf, üst sınıfın tüm alan ve metotlarına erişebilir, isterse bazılarını değiştirebilir.
-
-**@override** ise, alt sınıfta üst sınıftan gelen bir metodu veya özelliği yeniden tanımladığımızı (özelleştirdiğimizi) Dart derleyicisine bildirir. Bu sayede, alt sınıfın davranışı üst sınıftan farklı olabilir. `@override` kullanmak, kodun okunabilirliğini ve bakımını artırır; derleyiciye daima hangi metotların üst sınıftan geldiğini gösterir.
-
-### Kod Örneği
-
-```dart
-class Hayvan {
-  String isim;
-  Hayvan(this.isim);
-
-  void sesCikar() {
-    print('$isim ses çıkarıyor.');
-  }
-}
-
-class Kedi extends Hayvan {
-  Kedi(String isim) : super(isim);
-
-  @override // Üst sınıftaki sesCikar metodunu özelleştiriyoruz
-  void sesCikar() {
-    print('$isim miyavlıyor.');
-  }
-}
-
-void main() {
-  var k = Kedi('Minnak');
-  k.sesCikar(); // Minnak miyavlıyor.
-}
-```
-
-Yukarıdaki örnekte:
-- `Kedi` sınıfı, `Hayvan` sınıfından kalıtım alır (`extends Hayvan`).
-- `Kedi` sınıfı, `Hayvan`'daki `sesCikar` metodunu `@override` ile yeniden tanımlar.
-- Böylece, `Kedi` nesnesi için `sesCikar` çağrıldığında, alt sınıftaki özel davranış çalışır.
-
-**Kalıtım**, nesne tabanlı programlamada kodun tekrarını azaltır ve mantıksal hiyerarşi kurmamızı sağlar. **@override** ise, alt sınıfta üst sınıftan gelen metotları özelleştirirken kodun doğru ve anlaşılır olmasını sağlar.
+| Sorun | Neden? | Ne Yapmalı? |
+|---|---|---|
+| Ajan her şeyi yine `main.dart`'a yazdı | Klasör yapısı net söylenmedi | *"Ekranları lib/screens/ altında ayrı dosyalara böl"* yaz |
+| Ajan plan yerine direkt kod yazdı | "Kod yazma" uyarısı atlandı | **Reject** de, prompt'a *"ŞİMDİLİK KOD YAZMA, SADECE PLAN YAP"* ekleyip tekrar gönder |
+| Yeni ekranların renkleri farklı | Stitch'te yeni proje açıldı | Aynı Stitch projesinde tekrar tasarla |
+| `git commit` "Please tell me who you are" hatası verdi | Git kimliği tanımlanmamış | `git config --global user.name/user.email` komutlarını çalıştır |
 
 ---
 
-## Statik üyeler (static)
+## 📝 Haftalık Ödev
 
-```dart
-class Matematik {
-  static const double PI = 3.14159;
+1. Stitch'te kendi projenin 2. ve 3. ekranını aynı stilde tasarla, `tasarimlar/` klasörüne kaydet.
+2. Agent Mode ile **Plan → Onay → Uygula** yöntemini kullanarak 3 ekranlı yapıyı kur.
+3. Alt menüdeki tüm sekmeleri test et.
+4. `git add .` ve `git commit` ile ilk kaydını al.
 
-  static double alanDaire(double yaricap) => PI * yaricap * yaricap;
-}
-
-void main() {
-  print(Matematik.alanDaire(3));
-}
-```
-
-Statik üyeler doğrudan sınıf üzerinden çağrılır, örnek oluşturulmasına gerek yoktur.
+### ✅ Hafta 08 Kontrol Listesi
+- [ ] `lib/screens` klasörünün ve `main.dart` dosyasının görevini anlatabiliyorum.
+- [ ] Sohbet botu ile ajan arasındaki farkı biliyorum.
+- [ ] Stitch'te 2 yeni ekranı aynı stilde tasarladım.
+- [ ] Ajana önce plan yaptırdım, sonra onaylayıp uygulattım.
+- [ ] Uygulamam 3 ekranlı ve alt menüyle çalışıyor.
+- [ ] `git add` ve `git commit` ile ilk kaydımı aldım.
 
 ---
 
-## Küçük bir özet ve tavsiyeler
-
-- Sınıflar veri ve davranışı bir arada tutar.
-
-- Önce hangi veriye (alanlara) ihtiyacınız olduğunu, sonra hangi davranışların (metotlar) gerekli olduğunu düşünün.
-
-- Yapıcılar nesne oluşturmayı kolaylaştırır; named constructor'lar farklı başlatma yolları sunar.
-
-- Alanları doğrudan dışarı açmamak (gizleme) ve gerektikçe getter/setter kullanmak iyi bir pratiktir.
-
-Eğer isterseniz, bu dosyaya daha fazla örnek (arabirimler, karışık miras, mixinler, abstract class) ekleyebilirim.
+### 🔗 Ders Navigasyonu
+⬅️ [Hafta 07: Stitch → VS Code Gemini](../Hafta-07/README.md) | 🏠 [Ana Sayfa](../README.md) | ➡️ [Hafta 09: Proje Kuralları, Skills & GitHub](../Hafta-09/README.md)
